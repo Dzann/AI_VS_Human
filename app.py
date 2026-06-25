@@ -35,6 +35,7 @@ def clean_text(text):
 # ==========================
 st.set_page_config(
     page_title="AI vs Human Detector",
+    page_icon="🤖",
     layout="wide"
 )
 
@@ -43,80 +44,52 @@ st.set_page_config(
 # ==========================
 st.sidebar.header("⚙️ Fitur Pendukung")
 
-with st.sidebar.expander("📖 Penjelasan Fitur", expanded=False):
-
-    st.markdown("""
-    **Prompt Complexity Score**
-    
-    Tingkat kerumitan isi teks.
-
-    **Perplexity Score**
-    
-    Tingkat kealamian teks saat dibaca.
-
-    **Burstiness Index**
-    
-    Variasi panjang kalimat dalam tulisan.
-
-    **Syntactic Variability**
-    
-    Variasi struktur atau susunan kalimat.
-
-    **Semantic Coherence**
-    
-    Keterkaitan antar kalimat dalam teks.
-
-    **Lexical Diversity**
-    
-    Keragaman kosakata yang digunakan.
-
-    **Readability Grade**
-    
-    Tingkat kesulitan teks untuk dibaca.
-
-    **Generation Confidence**
-    
-    Tingkat keyakinan model terhadap pola teks.
-    """)
-
 prompt_complexity_score = st.sidebar.number_input(
     "Prompt Complexity Score",
-    value=0.5
+    value=0.5,
+    help="Mengukur tingkat kerumitan isi teks. Nilai yang lebih tinggi menunjukkan teks lebih kompleks dan detail."
 )
 
 perplexity_score = st.sidebar.number_input(
     "Perplexity Score",
-    value=50.0
+    value=50.0,
+    help="Mengukur seberapa alami suatu teks ketika dibaca. Digunakan untuk melihat pola penulisan yang lebih terstruktur atau spontan."
 )
 
 burstiness_index = st.sidebar.number_input(
     "Burstiness Index",
-    value=0.5
+    value=0.5,
+    help="Mengukur variasi panjang kalimat dalam tulisan. Nilai tinggi menunjukkan adanya campuran kalimat pendek dan panjang."
 )
 
 syntactic_variability = st.sidebar.number_input(
     "Syntactic Variability",
-    value=0.5
+    value=0.5,
+    help="Mengukur variasi struktur atau susunan kalimat yang digunakan dalam teks."
 )
 
 semantic_coherence_score = st.sidebar.number_input(
     "Semantic Coherence",
-    value=0.5
+    value=0.5,
+    help="Mengukur keterkaitan antar kalimat dalam sebuah tulisan. Nilai tinggi menunjukkan topik lebih konsisten."
 )
 
 lexical_diversity_ratio = st.sidebar.number_input(
     "Lexical Diversity",
-    value=0.5
+    value=0.5,
+    help="Mengukur keragaman kosakata yang digunakan. Semakin tinggi berarti semakin banyak variasi kata."
 )
 
 readability_grade_level = st.sidebar.number_input(
     "Readability Grade",
-    value=10.0
+    value=10.0,
+    help="Mengukur tingkat kesulitan teks untuk dibaca dan dipahami."
 )
 
 generation_confidence_score = st.sidebar.number_input(
     "Generation Confidence",
-    value=0.5
+    value=0.5,
+    help="Menunjukkan seberapa kuat pola teks yang dikenali oleh model untuk membantu proses klasifikasi."
 )
 
 # ==========================
@@ -175,10 +148,29 @@ if st.button("🔍 Prediksi", use_container_width=True):
 
         confidence = np.max(prob) * 100
 
-        st.success(f"✅ Hasil Prediksi: {label}")
+        if label.lower() == "ai":
+            st.error(f"🤖 Hasil Prediksi: {label}")
+        else:
+            st.success(f"👤 Hasil Prediksi: {label}")
 
         st.info(
             f"🎯 Tingkat Keyakinan Model: {confidence:.2f}%"
         )
 
-        st.progress(float(confidence / 100))
+        st.progress(confidence / 100)
+
+        st.subheader("Ringkasan Hasil")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric(
+                label="Prediksi",
+                value=label
+            )
+
+        with col2:
+            st.metric(
+                label="Confidence",
+                value=f"{confidence:.2f}%"
+            )
