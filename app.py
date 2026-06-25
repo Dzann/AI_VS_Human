@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 import joblib
 import re
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 from scipy.sparse import hstack
 from scipy.sparse import csr_matrix
 
@@ -152,10 +153,85 @@ if st.button("🔍 Prediksi", use_container_width=True):
             st.error(f"🤖 Hasil Prediksi: {label}")
         else:
             st.success(f"👤 Hasil Prediksi: {label}")
+    # ==================================
+# ANALISIS HASIL KLASIFIKASI
+# ==================================
 
+st.subheader("📈 Analisis Hasil Klasifikasi")
+
+prob_df = pd.DataFrame({
+    "Kelas": le.classes_,
+    "Probabilitas": prob[0] * 100
+})
+
+fig, ax = plt.subplots(figsize=(6,4))
+
+ax.bar(
+    prob_df["Kelas"],
+    prob_df["Probabilitas"]
+)
+
+ax.set_ylabel("Persentase (%)")
+ax.set_title("Distribusi Probabilitas Prediksi")
+
+st.pyplot(fig)
+
+st.dataframe(
+    prob_df,
+    use_container_width=True
+)
         st.info(
             f"🎯 Tingkat Keyakinan Model: {confidence:.2f}%"
         )
+
+        # ==================================
+# FEATURE IMPORTANCE
+# ==================================
+
+st.subheader("📊 Analisis Feature Importance")
+
+feature_names = [
+    "Prompt Complexity",
+    "Perplexity",
+    "Burstiness",
+    "Syntactic Variability",
+    "Semantic Coherence",
+    "Lexical Diversity",
+    "Readability Grade",
+    "Generation Confidence"
+]
+
+importances = model.feature_importances_[-8:]
+
+importance_df = pd.DataFrame({
+    "Feature": feature_names,
+    "Importance": importances
+})
+
+importance_df = importance_df.sort_values(
+    by="Importance",
+    ascending=True
+)
+
+fig, ax = plt.subplots(figsize=(8,5))
+
+ax.barh(
+    importance_df["Feature"],
+    importance_df["Importance"]
+)
+
+ax.set_title("Feature Importance")
+ax.set_xlabel("Importance Score")
+
+st.pyplot(fig)
+
+st.dataframe(
+    importance_df.sort_values(
+        by="Importance",
+        ascending=False
+    ),
+    use_container_width=True
+)
 
         st.progress(confidence / 100)
 
