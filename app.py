@@ -104,7 +104,7 @@ st.write(
 text = st.text_area(
     "Masukkan Teks",
     height=250,
-    placeholder="Tempel atau ketik teks yang ingin dianalisis di sini..."
+    placeholder="Tempel atau ketik teks yang ingin dianalisis dalam bahasa inggris di sini..."
 )
 
 # ==========================
