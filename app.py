@@ -49,42 +49,50 @@ st.sidebar.header("⚙️ Fitur Pendukung")
 
 prompt_complexity_score = st.sidebar.number_input(
     "Prompt Complexity Score",
-    value=0.5
+    value=0.5,
+    help="Mengukur tingkat kompleksitas prompt atau teks. Nilai yang lebih tinggi menunjukkan struktur kalimat dan instruksi yang lebih kompleks."
 )
 
 perplexity_score = st.sidebar.number_input(
     "Perplexity Score",
-    value=50.0
+    value=50.0,
+    help="Mengukur seberapa sulit model bahasa memprediksi kata berikutnya. Nilai rendah biasanya menunjukkan pola yang lebih terprediksi."
 )
 
 burstiness_index = st.sidebar.number_input(
     "Burstiness Index",
-    value=0.5
+    value=0.5,
+    help="Mengukur variasi panjang dan pola kalimat dalam teks. Teks manusia umumnya memiliki burstiness yang lebih tinggi dibandingkan teks AI."
 )
 
 syntactic_variability = st.sidebar.number_input(
     "Syntactic Variability",
-    value=0.5
+    value=0.5,
+    help="Mengukur keragaman struktur tata bahasa yang digunakan dalam teks. Semakin tinggi nilainya, semakin beragam struktur kalimatnya."
 )
 
 semantic_coherence_score = st.sidebar.number_input(
     "Semantic Coherence",
-    value=0.5
+    value=0.5,
+    help="Mengukur konsistensi makna antar kalimat. Nilai tinggi menunjukkan isi teks lebih runtut dan saling berhubungan."
 )
 
 lexical_diversity_ratio = st.sidebar.number_input(
     "Lexical Diversity",
-    value=0.5
+    value=0.5,
+    help="Mengukur keragaman kosakata yang digunakan. Nilai tinggi berarti lebih banyak variasi kata yang muncul dalam teks."
 )
 
 readability_grade_level = st.sidebar.number_input(
     "Readability Grade",
-    value=10.0
+    value=10.0,
+    help="Menunjukkan tingkat keterbacaan teks berdasarkan level pendidikan. Semakin tinggi nilainya, semakin sulit teks untuk dipahami."
 )
 
 generation_confidence_score = st.sidebar.number_input(
     "Generation Confidence",
-    value=0.5
+    value=0.5,
+    help="Skor yang menunjukkan tingkat keyakinan bahwa teks dihasilkan oleh model AI. Nilai lebih tinggi mengindikasikan kemungkinan lebih besar berasal dari AI."
 )
 
 # ==========================
